@@ -2,6 +2,14 @@ module nyx_api
 
 go 1.23.4
 
+replace (
+	github.com/EDDYCJY/go-gin-example/pkg/setting => ~/go-application/go-gin-example/pkg/setting
+	github.com/EDDYCJY/go-gin-example/conf    	  => ~/go-application/go-gin-example/pkg/conf
+	github.com/EDDYCJY/go-gin-example/middleware  => ~/go-application/go-gin-example/middleware
+	github.com/EDDYCJY/go-gin-example/models 	  => ~/go-application/go-gin-example/models
+	github.com/EDDYCJY/go-gin-example/routers 	  => ~/go-application/go-gin-example/routers
+)
+
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
 	github.com/bytedance/sonic v1.13.2 // indirect

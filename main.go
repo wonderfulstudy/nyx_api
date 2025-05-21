@@ -8,29 +8,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CorsMiddleware() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		c.Header("Access-Control-Allow-Origin", "*")
-		c.Header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		c.Header("Access-Control-Allow-Headers", "Content-Type, Authorization")
-		if c.Request.Method == "OPTIONS" {
-			c.AbortWithStatus(200)
-			return
-		}
-		c.Next()
-	}
-}
+
 
 func main() {
-	// 初始化数据库
-	configs.InitDB()
-	configs.InitLogger()
+	router := routers.InitRouter()
 
-	r := gin.Default()
-	r.Use(CorsMiddleware())
+	s := &http.Server{
+		Addr:           fmt.Sprintf(":%d", setting.HTTPPort),
+		Handler:        router,
+		ReadTimeout:    setting.ReadTimeout,
+		WriteTimeout:   setting.WriteTimeout,
+		MaxHeaderBytes: 1 << 20,
+	}
 
-	user.SetupUserRoutes(r)
-	pubkey.SetupPubkeyRoutes(r)
-
-	r.Run(":9528")
+	s.ListenAndServe()
 }
