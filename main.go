@@ -1,14 +1,11 @@
 package main
 
 import (
-	"nyx_api/api/pubkey"
-	"nyx_api/api/user"
-	"nyx_api/configs"
-
-	"github.com/gin-gonic/gin"
+	"fmt"
+	"net/http"
+	"nyx_api/pkg/setting"
+	"nyx_api/routers"
 )
-
-
 
 func main() {
 	router := routers.InitRouter()

@@ -1,9 +1,10 @@
 package routers
 
 import (
-    "github.com/gin-gonic/gin"
+	"nyx_api/pkg/setting"
+	v1 "nyx_api/routers/api/v1"
 
-    "github.com/EDDYCJY/go-gin-example/pkg/setting"
+	"github.com/gin-gonic/gin"
 )
 
 func corsMiddleware() gin.HandlerFunc {
@@ -20,19 +21,26 @@ func corsMiddleware() gin.HandlerFunc {
 }
 
 func InitRouter() *gin.Engine {
-    r := gin.New()
+	r := gin.New()
 
-    r.Use(gin.Logger())
-    r.Use(gin.Recovery())
-    r.Use(corsMiddleware())
+	r.Use(gin.Logger())
+	r.Use(gin.Recovery())
+	r.Use(corsMiddleware())
 
-    gin.SetMode(setting.RunMode)
+	gin.SetMode(setting.RunMode)
 
-    r.GET("/test", func(c *gin.Context) {
-        c.JSON(200, gin.H{
-            "message": "test",
-        })
-    })
+	apiv1 := r.Group("/api/v1")
+	{
+		// 获取用户信息
+		apiv1.GET("/user", v1.GetUser)
+		// 新增用户
+		apiv1.POST("/user", v1.AddUser)
+		// 修改用户信息
+		apiv1.POST("/user/:id", v1.UpdateUser)
+		// 删除用户
+		apiv1.POST("/user/:id", v1.DeleteUser)
 
-    return r
+	}
+
+	return r
 }
