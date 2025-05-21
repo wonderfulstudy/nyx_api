@@ -1,0 +1,18 @@
+services:
+  nyx_mysql:
+    image: mysql:8.0.37
+    container_name: nyx_mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456QWE
+    volumes:
+      - ./volume/mysql/data:/var/lib/mysql
+    networks:
+      - nyx_network
+
+networks:
+  nyx_network:
+    driver: bridge
+    name: nyx_network
