@@ -35,10 +35,6 @@ func InitRouter() *gin.Engine {
 		apiv1.GET("/user", v1.GetUser)
 		// 新增用户
 		apiv1.POST("/user", v1.AddUser)
-		// 修改用户信息
-		apiv1.POST("/user/:id", v1.UpdateUser)
-		// 删除用户
-		apiv1.POST("/user/:id", v1.DeleteUser)
 
 	}
 
