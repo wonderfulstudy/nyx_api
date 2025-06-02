@@ -42,7 +42,7 @@ func middlewareDecryptReq() func(c *gin.Context) {
 			return
 		}
 		defer c.Request.Body.Close()
-		
+
 		// 空数据直接放行
 		if len(data) == 0 {
 			c.Next()
