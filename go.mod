@@ -6,6 +6,7 @@ replace (
 	github.com/wonderfulstudy/nyx_api/models => ../nyx_api/models
 	github.com/wonderfulstudy/nyx_api/pkg/setting => ../nyx_api/pkg/setting
 	github.com/wonderfulstudy/nyx_api/routers => ../nyx_api/routers
+	github.com/wonderfulstudy/nyx_api/routers/api => ../nyx_api/routers/api
 )
 
 require (
@@ -21,6 +22,8 @@ require (
 	github.com/bytedance/sonic v1.13.2 // indirect
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/duke-git/lancet/v2 v2.3.6 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.9 // indirect
 	github.com/gin-contrib/sse v1.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
@@ -28,6 +31,7 @@ require (
 	github.com/go-playground/validator/v10 v10.26.0 // indirect
 	github.com/go-sql-driver/mysql v1.9.2 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
+	github.com/google/uuid v1.6.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.10 // indirect

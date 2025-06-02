@@ -12,6 +12,21 @@ services:
     networks:
       - nyx_network
 
+  nyx_air:
+    image: cosmtrek/air
+    container_name: nyx_air
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      - air_wd=/go/src/github.com/cosmtrek/hub
+    volumes:
+      - ./:/go/src/github.com/cosmtrek/hub
+    working_dir: /go/src/github.com/cosmtrek/hub
+    command: ["-c", ".air.toml"]
+    networks:
+      - nyx_network
+
 networks:
   nyx_network:
     driver: bridge

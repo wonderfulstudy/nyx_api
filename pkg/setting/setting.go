@@ -18,6 +18,7 @@ var (
 
 	PageSize  int
 	JwtSecret string
+	AESKey    string
 )
 
 func init() {

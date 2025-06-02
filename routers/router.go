@@ -2,6 +2,7 @@ package routers
 
 import (
 	"nyx_api/pkg/setting"
+	api "nyx_api/routers/api"
 	v1 "nyx_api/routers/api/v1"
 
 	"github.com/gin-gonic/gin"
@@ -28,22 +29,12 @@ func InitRouter() *gin.Engine {
 
 	gin.SetMode(setting.RunMode)
 
+	r.GET("/auth", api.GetAuth)
+
 	apiv1 := r.Group("/api/v1")
 	{
 		// 获取用户信息
-		apiv1.GET("/user", v1.GetUser)
-		// 新增用户
-		apiv1.POST("/user", v1.AddUser)
-
-		//获取标签列表
-		apiv1.GET("/tags", v1.GetTags)
-		//新建标签
-		//新建标签
-		apiv1.POST("/tags", v1.AddTag)
-		//更新指定标签
-		apiv1.PUT("/tags/:id", v1.EditTag)
-		//删除指定标签
-		apiv1.DELETE("/tags/:id", v1.DeleteTag)
+		apiv1.GET("/user", v1.GetUserBy)
 	}
 
 	return r
