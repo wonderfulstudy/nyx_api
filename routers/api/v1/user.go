@@ -6,7 +6,6 @@ import (
 	"nyx_api/middleware/aes"
 	"nyx_api/models"
 	"nyx_api/pkg/e"
-	"nyx_api/pkg/setting"
 	"regexp"
 
 	"github.com/astaxie/beego/validation"
@@ -37,8 +36,11 @@ func GetUserBy(c *gin.Context) {
 			user = models.GetUserByUuid(uuid)
 
 			fmt.Println("--------加密开始")
-			cipherText := aes.AesCbcEncryptBase64([]byte(user.Password), []byte(setting.AESKey)) // 使用完整参数调用
-			user.Password = string(cipherText)                                                   // 赋值base64编码后的字符串
+			cipherText, err := aes.AesEncryptCBCBase64(user.Password) // 使用完整参数调用
+			if err != nil {
+				fmt.Println("--------加密失败")
+			}
+			user.Password = string(cipherText) // 赋值base64编码后的字符串
 			fmt.Println("--------加密结束")
 
 			c.JSON(http.StatusOK, gin.H{
@@ -67,4 +69,19 @@ func UpdateUser(c *gin.Context) {
 
 // 删除用户
 func DeleteUser(c *gin.Context) {
+}
+
+type LoginUser struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+// 用户登录
+func UserLogin(c *gin.Context) {
+	c.JSON(e.SUCCESS, gin.H{
+		"code": 20000,
+		"data": gin.H{
+			"token": "admin-token",
+		},
+	})
 }
