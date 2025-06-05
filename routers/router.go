@@ -2,6 +2,7 @@ package routers
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"nyx_api/middleware/aes"
 	"nyx_api/pkg/setting"
@@ -16,13 +17,16 @@ func corsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Access-Control-Allow-Origin", "*")
 		c.Header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-		c.Header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		c.Header("Access-Control-Allow-Headers", "Content-Type, Authorization, x-token")
+		c.Header("Access-Control-Expose-Headers", "Content-Length, Content-Type, Location")
+		// 允许携带凭证（如 Cookie）
 		c.Header("Access-Control-Allow-Credentials", "true")
+
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(200)
 			return
 		}
-		// c.Next()
+		c.Next()
 	}
 }
 
@@ -30,6 +34,7 @@ func corsMiddleware() gin.HandlerFunc {
 func decryptMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 跳过不需要解密的请求（如 OPTIONS 或非 POST/PUT 请求）
+		fmt.Println("请求url", c.Request.URL.Path)
 		if c.Request.Method == "OPTIONS" || c.Request.Method != "POST" {
 			c.Next()
 			return
@@ -54,7 +59,6 @@ func decryptMiddleware() gin.HandlerFunc {
 			c.AbortWithStatusJSON(400, gin.H{"error": "Failed to decrypt data", "details": err.Error()})
 			return
 		}
-
 		// 重新设置请求体
 		c.Request.Body = io.NopCloser(bytes.NewBuffer([]byte(decryptedData)))
 
@@ -79,6 +83,7 @@ func InitRouter() *gin.Engine {
 		// 获取用户信息
 		apiv1.GET("/user", v1.GetUserBy)
 		apiv1.POST("/user/login", v1.UserLogin)
+		apiv1.GET("/user/info", v1.UserInfo)
 	}
 
 	return r

@@ -4,11 +4,11 @@ import (
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
-	"crypto/rand"
 	"encoding/base64"
-	"io"
 	"nyx_api/pkg/setting"
 )
+
+var keyLength = 32
 
 // CBC 加密 按照 golang 标准库的例子代码
 // 不过里面没有填充的部分, 所以补上
@@ -39,7 +39,8 @@ func PaddingLeft(ori []byte, pad byte, length int) []byte {
 
 // AES 加密, 填充秘钥 key 的 16 位, 24, 32 分别对应 AES-128, AES-192, or AES-256
 func AesCBCEncrypt(rawData, key []byte) ([]byte, error) {
-	block, err := aes.NewCipher(key)
+	pkey := PaddingLeft(key, '0', keyLength)
+	block, err := aes.NewCipher(pkey)
 	if err != nil {
 		panic(err)
 	}
@@ -47,29 +48,21 @@ func AesCBCEncrypt(rawData, key []byte) ([]byte, error) {
 	// 填充原文
 	blockSize := block.BlockSize()
 	rawData = PKCS7Padding(rawData, blockSize)
-	// 初始向量 IV 必须是唯一, 但不需要保密
-	cipherText := make([]byte, blockSize+len(rawData))
-	// block 大小 16
-	iv := cipherText[:blockSize]
-	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
-		panic(err)
-	}
-
-	// block 大小和初始向量大小一定要一致
-	mode := cipher.NewCBCEncrypter(block, iv)
-	mode.CryptBlocks(cipherText[blockSize:], rawData)
+	mode := cipher.NewCBCEncrypter(block, pkey[:blockSize])
+	cipherText := make([]byte, len(rawData))
+	mode.CryptBlocks(cipherText, rawData)
 
 	return cipherText, nil
 }
 
 func AesCBCDecrypt(ciphertext, key []byte) ([]byte, error) {
-	pkey := PaddingLeft(key, '0', 16)
+	pkey := PaddingLeft(key, '0', keyLength)
 	block, err := aes.NewCipher(pkey)
 	if err != nil {
 		panic(err)
 	}
 
-	blockModel := cipher.NewCBCDecrypter(block, pkey)
+	blockModel := cipher.NewCBCDecrypter(block, pkey[:block.BlockSize()])
 	plantText := make([]byte, len(ciphertext))
 	blockModel.CryptBlocks(plantText, ciphertext)
 	plantText = PKCS7UnPadding(plantText)

@@ -12,6 +12,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 数据模型定义（统一放在文件顶部）
+type LoginRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type UserResponse struct {
+	ID       uint   `json:"id"`
+	Username string `json:"username"`
+	// 其他需要的字段...
+}
+
 // 获取用户信息
 func GetUserBy(c *gin.Context) {
 	uuid := c.Query("uuid")
@@ -71,17 +83,62 @@ func UpdateUser(c *gin.Context) {
 func DeleteUser(c *gin.Context) {
 }
 
-type LoginUser struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
 // 用户登录
 func UserLogin(c *gin.Context) {
+	// 定义接收结构体
+	var loginReq LoginRequest
+	// 绑定JSON数据
+	if err := c.ShouldBindJSON(&loginReq); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": e.INVALID_PARAMS,
+			"msg":  e.GetMsg(e.INVALID_PARAMS),
+		})
+		return
+	}
+
+	// 查询数据库
+	var user models.User
+	user = models.GetUserByName(loginReq.Username)
+
+	// 验证密码
+	if user.Password != loginReq.Password {
+		// 添加调试日志
+		fmt.Printf("数据库密码: [%s]", user.Password)
+		fmt.Printf("输入密码: [%s]\n", loginReq.Password)
+		c.JSON(http.StatusUnauthorized, gin.H{
+			"code": e.ERROR_AUTH,
+			"msg":  e.GetMsg(e.ERROR_AUTH),
+		})
+		return
+	}
+
 	c.JSON(e.SUCCESS, gin.H{
 		"code": 20000,
 		"data": gin.H{
-			"token": "admin-token",
+			"token": user.Token,
 		},
+	})
+}
+
+// 用户信息
+func UserInfo(c *gin.Context) {
+	token := c.Query("token")
+	fmt.Println("token: ", token)
+	info := models.GetUserByToken(token)
+	var roles []string
+	roles = append(roles, models.GetRoleById(info.RoleId).KeyName)
+	// TODO: 添加基于token的业务逻辑处理
+	res := gin.H{
+		"avatar":       info.Avatar,
+		"name":         info.Name,
+		"introduction": info.Introduction,
+		"roles":        roles,
+	}
+	fmt.Println("返回数据", res)
+
+	// 返回JSON响应
+	c.JSON(e.SUCCESS, gin.H{
+		"code": 20000,
+		"data": res,
 	})
 }
