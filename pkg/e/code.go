@@ -15,4 +15,6 @@ const (
 	ERROR_AUTH                     = 20004
 
 	ERROR_USER_OR_PASSWORD_NOT_MATCH = 20005
+	ERROR_BIND_FAILED                = 20006
+	ERROR_VALIDATION_FAILED          = 20007
 )

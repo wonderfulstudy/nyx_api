@@ -59,6 +59,7 @@ func decryptMiddleware() gin.HandlerFunc {
 			c.AbortWithStatusJSON(400, gin.H{"error": "Failed to decrypt data", "details": err.Error()})
 			return
 		}
+		fmt.Println("解密数据：", decryptedData)
 		// 重新设置请求体
 		c.Request.Body = io.NopCloser(bytes.NewBuffer([]byte(decryptedData)))
 
@@ -81,9 +82,14 @@ func InitRouter() *gin.Engine {
 	apiv1 := r.Group("/api/v1")
 	{
 		// 获取用户信息
-		apiv1.GET("/user", v1.GetUserBy)
+		apiv1.POST("/user/update", v1.UpdateUser)
+		apiv1.POST("/user/create", v1.CreateUser)
+		apiv1.POST("/user/delete", v1.DeleteUser)
 		apiv1.POST("/user/login", v1.UserLogin)
 		apiv1.GET("/user/info", v1.UserInfo)
+		apiv1.GET("/user/list", v1.UserList)
+
+		apiv1.GET("/worker/list", v1.GetWorkerList)
 	}
 
 	return r

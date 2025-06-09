@@ -6,7 +6,10 @@ import (
 	"nyx_api/middleware/aes"
 	"nyx_api/models"
 	"nyx_api/pkg/e"
+	"nyx_api/pkg/setting"
+	"nyx_api/util"
 	"regexp"
+	"strconv"
 
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
@@ -22,6 +25,25 @@ type UserResponse struct {
 	ID       uint   `json:"id"`
 	Username string `json:"username"`
 	// 其他需要的字段...
+}
+
+type UserRequest struct {
+	Username string `json:"username"`
+	Name     string `json:"name"`
+	Phone    string `json:"phone"`
+	Address  string `json:"address"`
+}
+
+type UpdateUserRequest struct {
+	Uuid     string `json:"uuid"`
+	Username string `json:"username"`
+	Name     string `json:"name"`
+	Phone    string `json:"phone"`
+	Address  string `json:"address"`
+}
+
+type DeleteUserRequest struct {
+	Uuid string `json:"uuid"`
 }
 
 // 获取用户信息
@@ -72,15 +94,82 @@ func GetUserBy(c *gin.Context) {
 }
 
 // 新增用户
-func AddUser(c *gin.Context) {
+func CreateUser(c *gin.Context) {
+	var userReq UserRequest
+	if err := c.ShouldBindJSON(&userReq); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": e.ERROR_BIND_FAILED,
+			"msg":  e.GetMsg(e.ERROR_BIND_FAILED),
+			"data": err.Error(),
+		})
+	}
+	fmt.Println("解密成功", userReq.Username)
+
+	var user models.User
+	user.Username = userReq.Username
+	user.Name = userReq.Name
+	user.Phone = userReq.Phone
+	user.Address = userReq.Address
+	user.Uuid = util.GenerateStringUUID()
+	password, err := aes.AesEncryptCBCBase64(setting.UserDefaultPassword)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": e.ERROR,
+			"msg":  e.GetMsg(e.ERROR),
+			"data": err.Error(),
+		})
+
+	}
+	user.Password = password
+	models.AddUser(&user)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 20000,
+		"msg":  "新增用户成功",
+	})
 }
 
 // 修改用户信息
 func UpdateUser(c *gin.Context) {
+	var userReq UpdateUserRequest
+	if err := c.ShouldBindJSON(&userReq); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": e.ERROR_BIND_FAILED,
+			"msg":  e.GetMsg(e.ERROR_BIND_FAILED),
+			"data": err.Error(),
+		})
+	}
+
+	var user models.User
+	user.Username = userReq.Username
+	user.Name = userReq.Name
+	user.Phone = userReq.Phone
+	user.Address = userReq.Address
+	user.Uuid = userReq.Uuid
+	models.UpdateUser(&user)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 20000,
+		"msg":  "修改用户信息成功",
+	})
 }
 
 // 删除用户
 func DeleteUser(c *gin.Context) {
+	var deleteUserReq DeleteUserRequest
+	if err := c.ShouldBindJSON(&deleteUserReq); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": e.ERROR_BIND_FAILED,
+			"msg":  e.GetMsg(e.ERROR_BIND_FAILED),
+			"data": err.Error(),
+		})
+	}
+	var user models.User
+	user.Uuid = deleteUserReq.Uuid
+
+	models.DeleteUser(&user)
+	c.JSON(http.StatusOK, gin.H{
+		"code": 20000,
+		"msg":  "删除用户成功",
+	})
 }
 
 // 用户登录
@@ -141,4 +230,26 @@ func UserInfo(c *gin.Context) {
 		"code": 20000,
 		"data": res,
 	})
+}
+
+func UserList(c *gin.Context) {
+	page := c.Query("page")
+	limit := c.Query("limit")
+
+	valid := validation.Validation{}
+	valid.Required(page, "page").Message("page 参数不能为空")
+	valid.Required(limit, "limit").Message("limit 参数不能为空")
+
+	pageInt, _ := strconv.Atoi(page)
+	limitInt, _ := strconv.Atoi(limit)
+	users := models.GetUserList(pageInt, limitInt)
+
+	c.JSON(e.SUCCESS, gin.H{
+		"code": 20000,
+		"data": gin.H{
+			"total": models.GetUserCount(), // 使用数据库实际总数
+			"items": users,
+		},
+	})
+
 }

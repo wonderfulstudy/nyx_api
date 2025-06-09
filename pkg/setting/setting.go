@@ -16,9 +16,10 @@ var (
 	ReadTimeout  time.Duration
 	WriteTimeout time.Duration
 
-	PageSize  int
-	JwtSecret string
-	AESKey    string
+	PageSize            int
+	JwtSecret           string
+	AESKey              string
+	UserDefaultPassword string
 )
 
 func init() {
@@ -56,5 +57,6 @@ func LoadApp() {
 
 	// JwtSecret = sec.Key("JWT_SECRET").MustString("!@)*#)!@U#@*!@!)")
 	PageSize = sec.Key("PAGE_SIZE").MustInt(10)
-	AESKey = sec.Key("AES_KEY").MustString("!@)*#)!@U#@*!@!)")
+	AESKey = sec.Key("AES_KEY").String()
+	UserDefaultPassword = sec.Key("USER_DEFAULT_PWD").String()
 }

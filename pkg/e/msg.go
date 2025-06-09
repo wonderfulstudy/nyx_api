@@ -1,7 +1,7 @@
 package e
 
 var MsgFlags = map[int]string{
-	SUCCESS:                          "ok",
+	SUCCESS:                          "success",
 	ERROR:                            "fail",
 	INVALID_PARAMS:                   "请求参数错误",
 	ERROR_EXIST_TAG:                  "已存在该标签名称",
@@ -12,6 +12,8 @@ var MsgFlags = map[int]string{
 	ERROR_AUTH_TOKEN:                 "Token生成失败",
 	ERROR_AUTH:                       "Token错误",
 	ERROR_USER_OR_PASSWORD_NOT_MATCH: "用户名或密码不匹配",
+	ERROR_BIND_FAILED:                "请求体绑定失败",
+	ERROR_VALIDATION_FAILED:          "参数校验失败",
 }
 
 func GetMsg(code int) string {
