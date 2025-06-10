@@ -90,6 +90,9 @@ func InitRouter() *gin.Engine {
 		apiv1.GET("/user/list", v1.UserList)
 
 		apiv1.GET("/worker/list", v1.GetWorkerList)
+
+		apiv1.GET("/wallet/info", v1.GetWallet)
+		apiv1.GET("/wallet/action", v1.GetAction)
 	}
 
 	return r

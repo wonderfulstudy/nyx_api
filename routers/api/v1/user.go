@@ -111,6 +111,8 @@ func CreateUser(c *gin.Context) {
 	user.Phone = userReq.Phone
 	user.Address = userReq.Address
 	user.Uuid = util.GenerateStringUUID()
+	user.Token = "user-token"
+	user.RoleId = 3
 	password, err := aes.AesEncryptCBCBase64(setting.UserDefaultPassword)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -217,18 +219,18 @@ func UserInfo(c *gin.Context) {
 	var roles []string
 	roles = append(roles, models.GetRoleById(info.RoleId).KeyName)
 	// TODO: 添加基于token的业务逻辑处理
-	res := gin.H{
-		"avatar":       info.Avatar,
-		"name":         info.Name,
-		"introduction": info.Introduction,
-		"roles":        roles,
-	}
-	fmt.Println("返回数据", res)
 
 	// 返回JSON响应
 	c.JSON(e.SUCCESS, gin.H{
 		"code": 20000,
-		"data": res,
+		"data": gin.H{
+			"name":         info.Name,
+			"uuid":         info.Uuid,
+			"phone":        info.Phone,
+			"address":      info.Address,
+			"introduction": info.Introduction,
+			"roles":        roles,
+		},
 	})
 }
 

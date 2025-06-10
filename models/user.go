@@ -7,17 +7,18 @@ import (
 )
 
 type User struct {
-	Id           int `gorm:"primary_key"`
-	Uuid         string
-	Username     string
-	Password     string
-	Avatar       string
-	Name         string
-	Introduction string
-	Token        string
-	RoleId       int
-	Phone        string
-	Address      string
+	Id           int       `gorm:"primary_key"`
+	Uuid         string    `json:"uuid"`
+	Username     string    `json:"username"`
+	Password     string    `json:"password"`
+	Avatar       string    `json:"avatar"`
+	Name         string    `json:"name"`
+	Introduction string    `json:"introduction"`
+	Token        string    `json:"token"`
+	RoleId       int       `json:"roleId"`
+	Phone        string    `json:"phone"`
+	Address      string    `json:"address"`
+	Status       int       `json:"status"`
 	CreatedAt    time.Time `gorm:"timestamp"`
 	UpdatedAt    time.Time `gorm:"timestamp"`
 }

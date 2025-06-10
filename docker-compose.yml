@@ -12,21 +12,6 @@ services:
     networks:
       - nyx_network
 
-  nyx_air:
-    image: dephy-api:v1.0
-    container_name: nyx_air
-    restart: always
-    ports:
-      - 8000:8000
-    # environment:
-    #   - air_wd=/app
-    volumes:
-      - ./volume/conf:/app/conf
-    # working_dir: /app
-    # command: server -c .air.toml
-    networks:
-      - nyx_network
-
 networks:
   nyx_network:
     driver: bridge
