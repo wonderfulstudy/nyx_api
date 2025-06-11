@@ -24,7 +24,6 @@ type LoginRequest struct {
 type UserResponse struct {
 	ID       uint   `json:"id"`
 	Username string `json:"username"`
-	// 其他需要的字段...
 }
 
 type UserRequest struct {
@@ -254,4 +253,11 @@ func UserList(c *gin.Context) {
 		},
 	})
 
+}
+
+func LoginOut(c *gin.Context) {
+	c.JSON(e.SUCCESS, gin.H{
+		"code": 20000,
+		"msg":  "登出成功",
+	})
 }
