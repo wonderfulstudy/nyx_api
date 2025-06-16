@@ -1,8 +1,8 @@
 package api
 
 import (
-	"log"
 	"net/http"
+	"nyx_api/middleware/log"
 	"nyx_api/models"
 	"nyx_api/pkg/e"
 	"nyx_api/util"
@@ -33,17 +33,18 @@ func GetAuth(c *gin.Context) {
 			if err != nil {
 				code = e.ERROR_AUTH_TOKEN
 			} else {
+				log.Log.Debugf("生成的token, %s", token)
 				data["token"] = token
 
 				code = e.SUCCESS
 			}
 
 		} else {
-			code = e.ERROR_AUTH
+			code = e.INVALID_PARAMS
 		}
 	} else {
 		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
+			log.Log.Info(err.Key, err.Message)
 		}
 	}
 

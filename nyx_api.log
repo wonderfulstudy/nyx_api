@@ -1,0 +1,29 @@
+time="2025-06-16T23:00:04+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-16T23:00:04+08:00" level=info msg="请求url/api/v1/user/info"
+time="2025-06-16T23:00:04+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=8.2448ms method=GET path=/api/v1/user/info status=200
+time="2025-06-16T23:00:22+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/login status=200
+time="2025-06-16T23:00:22+08:00" level=info msg="请求url/api/v1/user/login"
+time="2025-06-16T23:00:22+08:00" level=info msg="解密数据：{\"username\":\"admin\",\"password\":\"CPPE-cd@2019\"}"
+time="2025-06-16T23:00:22+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=5.9389ms method=POST path=/api/v1/user/login status=200
+time="2025-06-16T23:00:22+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-16T23:00:22+08:00" level=info msg="请求url/api/v1/user/info"
+time="2025-06-16T23:00:22+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=11.9317ms method=GET path=/api/v1/user/info status=200
+time="2025-06-16T23:20:46+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/logout status=200
+time="2025-06-16T23:20:46+08:00" level=info msg="请求url/api/v1/user/logout"
+time="2025-06-16T23:20:46+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=POST path=/api/v1/user/logout status=200
+time="2025-06-16T23:20:54+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/login status=200
+time="2025-06-16T23:20:54+08:00" level=info msg="请求url/api/v1/user/login"
+time="2025-06-16T23:20:54+08:00" level=info msg="解密数据：{\"username\":\"admin\",\"password\":\"CPPE-cd@2019\"}"
+time="2025-06-16T23:20:54+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=6.5528ms method=POST path=/api/v1/user/login status=200
+time="2025-06-16T23:20:54+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-16T23:20:54+08:00" level=info msg="请求url/api/v1/user/info"
+time="2025-06-16T23:20:54+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=11.0621ms method=GET path=/api/v1/user/info status=500
+time="2025-06-16T23:31:49+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/login status=200
+time="2025-06-16T23:31:49+08:00" level=info msg="请求url/api/v1/user/login"
+time="2025-06-16T23:31:49+08:00" level=info msg="解密数据：{\"username\":\"admin\",\"password\":\"CPPE-cd@2019\"}"
+time="2025-06-16T23:31:49+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=14.3303ms method=POST path=/api/v1/user/login status=200
+time="2025-06-16T23:31:49+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-16T23:31:49+08:00" level=info msg="请求url/api/v1/user/info"
+time="2025-06-16T23:31:49+08:00" level=debug msg="用户名: admin"
+time="2025-06-16T23:31:49+08:00" level=debug msg="密码: CPPE-cd@2019"
+time="2025-06-16T23:31:49+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=9.4942ms method=GET path=/api/v1/user/info status=200

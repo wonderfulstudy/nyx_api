@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"fmt"
 	"net/http"
+	"nyx_api/middleware/log"
 	"nyx_api/models"
 	"nyx_api/pkg/e"
 
@@ -24,7 +24,7 @@ func GetWallet(c *gin.Context) {
 	} else if uuid != "" {
 		code = e.SUCCESS
 		wallet := models.GetWalletByUuid(uuid)
-		c.JSON(e.SUCCESS, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"code": 20000,
 			"msg":  e.GetMsg(code),
 			"data": wallet,
@@ -38,7 +38,7 @@ func GetWallet(c *gin.Context) {
 func GetAction(c *gin.Context) {
 	uuid := c.Query("uuid")
 
-	fmt.Println("uuid", uuid)
+	log.Log.Info("uuid", uuid)
 
 	valid := validation.Validation{}
 	code := e.INVALID_PARAMS
@@ -47,8 +47,8 @@ func GetAction(c *gin.Context) {
 	} else if uuid != "" {
 		code = e.SUCCESS
 		walletAction := models.GetActionByUuid(uuid)
-		fmt.Println(walletAction[0].UpdatedAt)
-		c.JSON(e.SUCCESS, gin.H{
+		log.Log.Info(walletAction[0].UpdatedAt)
+		c.JSON(http.StatusOK, gin.H{
 			"code": 20000,
 			"msg":  e.GetMsg(code),
 			"data": walletAction,

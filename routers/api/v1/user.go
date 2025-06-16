@@ -1,9 +1,9 @@
 package v1
 
 import (
-	"fmt"
 	"net/http"
 	"nyx_api/middleware/aes"
+	"nyx_api/middleware/log"
 	"nyx_api/models"
 	"nyx_api/pkg/e"
 	"nyx_api/pkg/setting"
@@ -15,7 +15,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 数据模型定义（统一放在文件顶部）
 type LoginRequest struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
@@ -68,13 +67,10 @@ func GetUserBy(c *gin.Context) {
 			var user models.User
 			user = models.GetUserByUuid(uuid)
 
-			fmt.Println("--------加密开始")
 			cipherText, err := aes.AesEncryptCBCBase64(user.Password) // 使用完整参数调用
 			if err != nil {
-				fmt.Println("--------加密失败")
 			}
 			user.Password = string(cipherText) // 赋值base64编码后的字符串
-			fmt.Println("--------加密结束")
 
 			c.JSON(http.StatusOK, gin.H{
 				"code": code,
@@ -97,12 +93,11 @@ func CreateUser(c *gin.Context) {
 	var userReq UserRequest
 	if err := c.ShouldBindJSON(&userReq); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": e.ERROR_BIND_FAILED,
-			"msg":  e.GetMsg(e.ERROR_BIND_FAILED),
+			"code": e.ERROR_BIND_JSON,
+			"msg":  e.GetMsg(e.ERROR_BIND_JSON),
 			"data": err.Error(),
 		})
 	}
-	fmt.Println("解密成功", userReq.Username)
 
 	var user models.User
 	user.Username = userReq.Username
@@ -134,8 +129,8 @@ func UpdateUser(c *gin.Context) {
 	var userReq UpdateUserRequest
 	if err := c.ShouldBindJSON(&userReq); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": e.ERROR_BIND_FAILED,
-			"msg":  e.GetMsg(e.ERROR_BIND_FAILED),
+			"code": e.ERROR_BIND_JSON,
+			"msg":  e.GetMsg(e.ERROR_BIND_JSON),
 			"data": err.Error(),
 		})
 	}
@@ -158,8 +153,8 @@ func DeleteUser(c *gin.Context) {
 	var deleteUserReq DeleteUserRequest
 	if err := c.ShouldBindJSON(&deleteUserReq); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"code": e.ERROR_BIND_FAILED,
-			"msg":  e.GetMsg(e.ERROR_BIND_FAILED),
+			"code": e.ERROR_BIND_JSON,
+			"msg":  e.GetMsg(e.ERROR_BIND_JSON),
 			"data": err.Error(),
 		})
 	}
@@ -193,34 +188,41 @@ func UserLogin(c *gin.Context) {
 	// 验证密码
 	if user.Password != loginReq.Password {
 		// 添加调试日志
-		fmt.Printf("数据库密码: [%s]", user.Password)
-		fmt.Printf("输入密码: [%s]\n", loginReq.Password)
 		c.JSON(http.StatusUnauthorized, gin.H{
-			"code": e.ERROR_AUTH,
-			"msg":  e.GetMsg(e.ERROR_AUTH),
+			"code": e.ERROR_USER_AUTH,
+			"msg":  e.GetMsg(e.ERROR_USER_AUTH),
 		})
 		return
+	} else {
+		token, _ := util.GenerateToken(user.Username, user.Password)
+		c.JSON(http.StatusOK, gin.H{
+			"code": 20000,
+			"data": gin.H{
+				"token": token,
+			},
+		})
 	}
-
-	c.JSON(e.SUCCESS, gin.H{
-		"code": 20000,
-		"data": gin.H{
-			"token": user.Token,
-		},
-	})
 }
 
 // 用户信息
 func UserInfo(c *gin.Context) {
-	token := c.Query("token")
-	fmt.Println("token: ", token)
-	info := models.GetUserByToken(token)
+	token := c.GetHeader("Authorization")
+	claims, err := util.ParseToken(token)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"code": e.ERROR_AUTH_TOKEN,
+			"msg":  e.GetMsg(e.ERROR_AUTH_TOKEN),
+		})
+	}
+	info := models.GetUserByName(claims.Username)
+	log.Log.Debugf("用户名: %s", claims.Username)
+	log.Log.Debugf("密码: %s", claims.Password)
 	var roles []string
 	roles = append(roles, models.GetRoleById(info.RoleId).KeyName)
 	// TODO: 添加基于token的业务逻辑处理
 
 	// 返回JSON响应
-	c.JSON(e.SUCCESS, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"code": 20000,
 		"data": gin.H{
 			"name":         info.Name,
@@ -245,7 +247,7 @@ func UserList(c *gin.Context) {
 	limitInt, _ := strconv.Atoi(limit)
 	users := models.GetUserList(pageInt, limitInt)
 
-	c.JSON(e.SUCCESS, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"code": 20000,
 		"data": gin.H{
 			"total": models.GetUserCount(), // 使用数据库实际总数
@@ -256,8 +258,8 @@ func UserList(c *gin.Context) {
 }
 
 func LoginOut(c *gin.Context) {
-	c.JSON(e.SUCCESS, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"code": 20000,
-		"msg":  "登出成功",
+		"msg":  "登录成功",
 	})
 }

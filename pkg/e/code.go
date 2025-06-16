@@ -1,20 +1,19 @@
 package e
 
 const (
-	SUCCESS        = 200
-	ERROR          = 500
-	INVALID_PARAMS = 400
+	// 公共错误
+	SUCCESS         = 20000
+	INVALID_PARAMS  = 20003
+	ERROR           = 20001
+	ERROR_BIND_JSON = 20002
 
-	ERROR_EXIST_TAG         = 10001
-	ERROR_NOT_EXIST_TAG     = 10002
-	ERROR_NOT_EXIST_ARTICLE = 10003
+	// auth模块错误
+	ERROR_AUTH_TOKEN = 10001
 
-	ERROR_AUTH_CHECK_TOKEN_FAIL    = 20001
-	ERROR_AUTH_CHECK_TOKEN_TIMEOUT = 20002
-	ERROR_AUTH_TOKEN               = 20003
-	ERROR_AUTH                     = 20004
+	// user模块错误
+	ERROR_USER_AUTH = 30001
 
-	ERROR_USER_OR_PASSWORD_NOT_MATCH = 20005
-	ERROR_BIND_FAILED                = 20006
-	ERROR_VALIDATION_FAILED          = 20007
+	// wallet模块错误
+
+	// worker模块错误
 )

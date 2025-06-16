@@ -20,6 +20,12 @@ var (
 	JwtSecret           string
 	AESKey              string
 	UserDefaultPassword string
+	LogLevel            string
+	LogFile             string
+
+	RedisHost     string
+	RedisPassword string
+	RedisDatabase int
 )
 
 func init() {
@@ -32,6 +38,7 @@ func init() {
 	LoadBase()
 	LoadServer()
 	LoadApp()
+	LoadRedis()
 }
 
 func LoadBase() {
@@ -59,4 +66,17 @@ func LoadApp() {
 	PageSize = sec.Key("PAGE_SIZE").MustInt(10)
 	AESKey = sec.Key("AES_KEY").String()
 	UserDefaultPassword = sec.Key("USER_DEFAULT_PWD").String()
+	LogLevel = sec.Key("LogLevel").MustString("debug")
+	LogFile = sec.Key("LogFile").MustString("./nyx_api.log")
+}
+
+func LoadRedis() {
+	sec, err := Cfg.GetSection("redis")
+	if err != nil {
+		log.Fatalf("Fail to get section 'redis': %v", err)
+	}
+
+	RedisHost = sec.Key("HOST").MustString("127.0.0.1:6379")
+	RedisPassword = sec.Key("PASSWORD").MustString("")
+	RedisDatabase = sec.Key("DATABASE").MustInt(0)
 }

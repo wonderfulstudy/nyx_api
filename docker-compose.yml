@@ -12,6 +12,16 @@ services:
     networks:
       - nyx_network
 
+  redis:
+    image: redis:8.0.2
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./volume/redis/data:/data
+    command: redis-server --requirepass a%UE4kVbs8b$
+
 networks:
   nyx_network:
     driver: bridge
