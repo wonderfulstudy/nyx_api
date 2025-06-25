@@ -2,6 +2,11 @@ package middleware
 
 import (
 	"net/http"
+	"nyx_api/pkg/app"
+	"nyx_api/pkg/e"
+	"nyx_api/pkg/log"
+	"nyx_api/pkg/redis"
+	"nyx_api/util"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -11,8 +16,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// 白名单路径：无需验证 Authorization 的接口
 		whitelist := map[string]bool{
-			"/user/login": true,
-			"/auth":       true,
+			"/api/v1/user/login": true,
 		}
 
 		// 获取请求路径
@@ -24,19 +28,48 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		appG := app.Gin{C: c}
 		// 验证 Authorization 头
 		authHeader := c.GetHeader("Authorization")
 		if strings.TrimSpace(authHeader) == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{
+			appG.Response(http.StatusUnauthorized, e.ERROR_AUTH_TOKEN, gin.H{
 				"error": "Authorization header required",
 			})
 			c.Abort()
 			return
 		}
 
-		// TODO：可在此校验 token 合法性
+		claims, err := util.ParseToken(authHeader)
+		if err != nil {
+			log.Log.Errorf("Token parse error: %v", err)
+			appG.Response(http.StatusUnauthorized, e.ERROR_AUTH_TOKEN, gin.H{
+				"error": "Invalid or expired token",
+			})
+			c.Abort()
+			return
+		}
 
-		// 继续执行后续 handler
+		redisToken, err := redis.RDB.Get(redis.CTX, "user:"+claims.Username).Result()
+		if err != nil {
+			appG.Response(http.StatusUnauthorized, e.ERROR_AUTH_TOKEN, gin.H{
+				"error": "Failed to retrieve token from Redis",
+			})
+			c.Abort()
+			return
+		}
+
+		if redisToken != authHeader {
+			appG.Response(http.StatusUnauthorized, e.ERROR_AUTH_TOKEN, gin.H{
+				"error": "Token mismatch",
+			})
+			c.Abort()
+			return
+		}
+
+		c.Set("uuid", claims.Uuid)
+		c.Set("username", claims.Username)
+		c.Set("phone", claims.Phone)
+
 		c.Next()
 	}
 }

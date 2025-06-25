@@ -2,66 +2,63 @@ package v1
 
 import (
 	"net/http"
-	"nyx_api/middleware/log"
-	"nyx_api/models"
+	"nyx_api/pkg/app"
 	"nyx_api/pkg/e"
+	"nyx_api/pkg/log"
+	wallet_service "nyx_api/service/wallet_service"
 
-	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 )
 
-type WalletRequest struct {
-	Uuid string `json:"uuid" valid:"Required"`
-}
-
-func GetWallet(c *gin.Context) {
-	uuid := c.Query("uuid")
-
-	valid := validation.Validation{}
-	code := e.INVALID_PARAMS
-	if uuid == "" {
-		valid.SetError("uuid", "uuid不能为空")
-	} else if uuid != "" {
-		code = e.SUCCESS
-		wallet := models.GetWalletByUuid(uuid)
-		c.JSON(http.StatusOK, gin.H{
-			"code": 20000,
-			"msg":  e.GetMsg(code),
-			"data": wallet,
-		})
-	} else {
-		valid.SetError("params", "参数错误")
-		code = e.INVALID_PARAMS
-	}
-}
-
-func GetAction(c *gin.Context) {
-	uuid := c.Query("uuid")
-
-	log.Log.Info("uuid", uuid)
-
-	valid := validation.Validation{}
-	code := e.INVALID_PARAMS
-	if uuid == "" {
-		valid.SetError("uuid", "uuid不能为空")
-	} else if uuid != "" {
-		code = e.SUCCESS
-		walletAction := models.GetActionByUuid(uuid)
-		log.Log.Info(walletAction[0].UpdatedAt)
-		c.JSON(http.StatusOK, gin.H{
-			"code": 20000,
-			"msg":  e.GetMsg(code),
-			"data": walletAction,
-		})
+// @Summary 用户钱包数据
+// @Description 根据用户uuid获取用户的钱包数据
+// @Tags 钱包管理
+// @Produce  json
+// @Param uuid body string true "用户uuid"
+// @Success 200 {object} app.Response	"success"
+// @Success 500 {object} app.Response	"用户钱包数据失败"
+// @Router /api/v1/wallet/info [get]
+func WalletInfoHandler(c *gin.Context) {
+	var req wallet_service.WalletRequest
+	appG := app.Gin{C: c}
+	httpCode, errCode, err := app.BindQueryAndValid(c, &req)
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, err.Error())
 		return
-	} else {
-		valid.SetError("params", "参数错误")
-		code = e.INVALID_PARAMS
 	}
 
-	c.JSON(http.StatusBadRequest, gin.H{
-		"code": code,
-		"msg":  e.GetMsg(code),
-		"data": make(map[string]string),
-	})
+	log.Log.Debugf("wallet 请求参数 : %+v", req)
+
+	wallet, err := wallet_service.WalletInfoService(req.Uuid)
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, err.Error())
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, wallet)
+}
+
+// @Summary 交易记录
+// @Description 根据用户uuid获取该用户的所有交易记录
+// @Tags 钱包管理
+// @Produce  json
+// @Param uuid body string true "用户uuid"
+// @Success 200 {object} app.Response	"success"
+// @Success 500 {object} app.Response	"获取用户交易记录失败"
+// @Router /api/v1/wallet/action [post]
+func WalletActionListHandler(c *gin.Context) {
+	var req wallet_service.WalletRequest
+	appG := app.Gin{C: c}
+	httpCode, errCode, err := app.BindJsonAndValid(c, &req)
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, err.Error())
+	}
+
+	data, err := wallet_service.WalletActionListService(req)
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, err.Error())
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, data)
 }

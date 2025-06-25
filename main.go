@@ -8,19 +8,6 @@ import (
 )
 
 func main() {
-	// var src = "CPPE-cd@2019"
-	// en, err := aes.AesEncryptCBCBase64(src)
-	// if err != nil {
-	// 	log.Log.Info(err)
-	// }
-	// log.Log.Info("加密结果：", en)
-
-	// de, err := aes.AesDecryptCBCBase64("xd1kQNG1OYRFfQph+zeTnlXQb0LjhQ9rQR3yRIlZe9Z6r1+mvJK7VQdpbab1wPz59Nf6hxeWNRUnz97z85jFcw==")
-	// if err != nil {
-	// 	log.Log.Info(err)
-	// }
-	// log.Log.Info("解密结果：", de)
-
 	router := routers.InitRouter()
 
 	s := &http.Server{

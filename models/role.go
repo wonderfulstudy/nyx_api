@@ -12,7 +12,12 @@ type Role struct {
 	UpdatedAt   time.Time `gorm:"timestamp"`
 }
 
-func GetRoleById(Id int) (role Role) {
-	db.Where("id = ?", Id).First(&role)
-	return
+func GetRoleById(id int) (Role, error) {
+	var role Role
+	result := db.Model(&Role{}).Where("id = ?", id).First(&role)
+	if result.Error != nil {
+		return Role{}, result.Error
+	}
+
+	return role, nil
 }

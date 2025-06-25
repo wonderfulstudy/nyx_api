@@ -1,14 +1,19 @@
 package redis
 
 import (
-	"nyx_api/middleware/log"
+	"context"
+	"nyx_api/pkg/log"
 	"nyx_api/pkg/setting"
+	"time"
 
-	"github.com/go-redis/redis"
+	"github.com/go-redis/redis/v8"
 )
 
 // 声明一个全局的RDB变量
-var RDB *redis.Client
+var (
+	RDB *redis.Client
+	CTX = context.Background()
+)
 
 // 初始化连接
 func init() {
@@ -16,9 +21,14 @@ func init() {
 		Addr:     setting.RedisHost,
 		Password: setting.RedisPassword,
 		DB:       setting.RedisDatabase,
+		PoolSize: 100,
 	})
 
-	_, err := RDB.Ping().Result()
+	// 需要使用context库
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	_, err := RDB.Ping(ctx).Result()
 	if err != nil {
 		log.Log.Debugf("redis数据库连接失败: %s", err)
 	}

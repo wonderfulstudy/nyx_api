@@ -16,20 +16,20 @@ var keyLength = 32
 // 使用 PKCS7 进行填充, iOS 也是 7
 // 只要少于 256 就能放到一个 byte 中, 默认的 blockSize=16 (即采用 16*8=128, AES-128 长的密钥)
 // 最少填充 1 个 byte, 如果明文刚好是 blocksize 的整数倍, 则再填充一个 blocksize
-func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
+func pkcs7Padding(ciphertext []byte, blockSize int) []byte {
 	// 计算需要 padding 的数目, 并生成填充的文本
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(ciphertext, padtext...)
 }
 
-func PKCS7UnPadding(origData []byte) []byte {
+func pkcs7UnPadding(origData []byte) []byte {
 	length := len(origData)
 	unpadding := int(origData[length-1])
 	return origData[:(length - unpadding)]
 }
 
-func PaddingLeft(ori []byte, pad byte, length int) []byte {
+func paddingLeft(ori []byte, pad byte, length int) []byte {
 	if len(ori) >= length {
 		return ori[:length]
 	}
@@ -38,8 +38,8 @@ func PaddingLeft(ori []byte, pad byte, length int) []byte {
 }
 
 // AES 加密, 填充秘钥 key 的 16 位, 24, 32 分别对应 AES-128, AES-192, or AES-256
-func AesCBCEncrypt(rawData, key []byte) ([]byte, error) {
-	pkey := PaddingLeft(key, '0', keyLength)
+func aesCBCEncrypt(rawData, key []byte) ([]byte, error) {
+	pkey := paddingLeft(key, '0', keyLength)
 	block, err := aes.NewCipher(pkey)
 	if err != nil {
 		panic(err)
@@ -47,7 +47,7 @@ func AesCBCEncrypt(rawData, key []byte) ([]byte, error) {
 
 	// 填充原文
 	blockSize := block.BlockSize()
-	rawData = PKCS7Padding(rawData, blockSize)
+	rawData = pkcs7Padding(rawData, blockSize)
 	mode := cipher.NewCBCEncrypter(block, pkey[:blockSize])
 	cipherText := make([]byte, len(rawData))
 	mode.CryptBlocks(cipherText, rawData)
@@ -55,8 +55,8 @@ func AesCBCEncrypt(rawData, key []byte) ([]byte, error) {
 	return cipherText, nil
 }
 
-func AesCBCDecrypt(ciphertext, key []byte) ([]byte, error) {
-	pkey := PaddingLeft(key, '0', keyLength)
+func aesCBCDecrypt(ciphertext, key []byte) ([]byte, error) {
+	pkey := paddingLeft(key, '0', keyLength)
 	block, err := aes.NewCipher(pkey)
 	if err != nil {
 		panic(err)
@@ -65,13 +65,13 @@ func AesCBCDecrypt(ciphertext, key []byte) ([]byte, error) {
 	blockModel := cipher.NewCBCDecrypter(block, pkey[:block.BlockSize()])
 	plantText := make([]byte, len(ciphertext))
 	blockModel.CryptBlocks(plantText, ciphertext)
-	plantText = PKCS7UnPadding(plantText)
+	plantText = pkcs7UnPadding(plantText)
 
 	return plantText, nil
 }
 
 func AesEncryptCBCBase64(rawData string) (string, error) {
-	data, err := AesCBCEncrypt([]byte(rawData), []byte(setting.AESKey))
+	data, err := aesCBCEncrypt([]byte(rawData), []byte(setting.AESKey))
 	if err != nil {
 		return "", err
 	}
@@ -83,7 +83,7 @@ func AesDecryptCBCBase64(rawData string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	dnData, err := AesCBCDecrypt(data, []byte(setting.AESKey))
+	dnData, err := aesCBCDecrypt(data, []byte(setting.AESKey))
 	if err != nil {
 		return "", err
 	}

@@ -2,264 +2,199 @@ package v1
 
 import (
 	"net/http"
-	"nyx_api/middleware/aes"
-	"nyx_api/middleware/log"
-	"nyx_api/models"
+	"nyx_api/pkg/app"
 	"nyx_api/pkg/e"
-	"nyx_api/pkg/setting"
-	"nyx_api/util"
-	"regexp"
-	"strconv"
+	"nyx_api/pkg/log"
+	user_service "nyx_api/service/user_service"
 
-	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
 )
 
-type LoginRequest struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
-type UserResponse struct {
-	ID       uint   `json:"id"`
-	Username string `json:"username"`
-}
-
-type UserRequest struct {
-	Username string `json:"username"`
-	Name     string `json:"name"`
-	Phone    string `json:"phone"`
-	Address  string `json:"address"`
-}
-
-type UpdateUserRequest struct {
-	Uuid     string `json:"uuid"`
-	Username string `json:"username"`
-	Name     string `json:"name"`
-	Phone    string `json:"phone"`
-	Address  string `json:"address"`
-}
-
-type DeleteUserRequest struct {
-	Uuid string `json:"uuid"`
-}
-
-// 获取用户信息
-func GetUserBy(c *gin.Context) {
-	uuid := c.Query("uuid")
-	name := c.Query("name")
-	phone := c.Query("phone")
-
-	// 验证uuid合法性
-	valid := validation.Validation{}
-	code := e.INVALID_PARAMS
-	if uuid == "" && name == "" && phone == "" {
-		valid.SetError("params", "必须提供uuid/name/phone中的至少一个非空参数")
-	} else if uuid != "" && name == "" && phone == "" {
-		// 添加UUID格式验证
-		uuidPattern := "^[A-Za-z0-9]{8}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{4}-[A-Za-z0-9]{12}$"
-		matched, _ := regexp.MatchString(uuidPattern, uuid)
-		if !matched {
-			valid.SetError("uuid", "uuid格式不正确")
-			code = e.INVALID_PARAMS
-		} else {
-			code = e.SUCCESS
-			var user models.User
-			user = models.GetUserByUuid(uuid)
-
-			cipherText, err := aes.AesEncryptCBCBase64(user.Password) // 使用完整参数调用
-			if err != nil {
-			}
-			user.Password = string(cipherText) // 赋值base64编码后的字符串
-
-			c.JSON(http.StatusOK, gin.H{
-				"code": code,
-				"msg":  e.GetMsg(code),
-				"data": user,
-			})
-		}
-	} else if uuid == "" && name != "" && phone == "" {
-		code = e.SUCCESS
-	} else if uuid == "" && name == "" && phone != "" {
-		code = e.SUCCESS
-	} else {
-		valid.SetError("params", "参数错误")
-		code = e.INVALID_PARAMS
-	}
-}
-
-// 新增用户
-func CreateUser(c *gin.Context) {
-	var userReq UserRequest
-	if err := c.ShouldBindJSON(&userReq); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": e.ERROR_BIND_JSON,
-			"msg":  e.GetMsg(e.ERROR_BIND_JSON),
-			"data": err.Error(),
-		})
-	}
-
-	var user models.User
-	user.Username = userReq.Username
-	user.Name = userReq.Name
-	user.Phone = userReq.Phone
-	user.Address = userReq.Address
-	user.Uuid = util.GenerateStringUUID()
-	user.Token = "user-token"
-	user.RoleId = 3
-	password, err := aes.AesEncryptCBCBase64(setting.UserDefaultPassword)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": e.ERROR,
-			"msg":  e.GetMsg(e.ERROR),
-			"data": err.Error(),
-		})
-
-	}
-	user.Password = password
-	models.AddUser(&user)
-	c.JSON(http.StatusOK, gin.H{
-		"code": 20000,
-		"msg":  "新增用户成功",
-	})
-}
-
-// 修改用户信息
-func UpdateUser(c *gin.Context) {
-	var userReq UpdateUserRequest
-	if err := c.ShouldBindJSON(&userReq); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": e.ERROR_BIND_JSON,
-			"msg":  e.GetMsg(e.ERROR_BIND_JSON),
-			"data": err.Error(),
-		})
-	}
-
-	var user models.User
-	user.Username = userReq.Username
-	user.Name = userReq.Name
-	user.Phone = userReq.Phone
-	user.Address = userReq.Address
-	user.Uuid = userReq.Uuid
-	models.UpdateUser(&user)
-	c.JSON(http.StatusOK, gin.H{
-		"code": 20000,
-		"msg":  "修改用户信息成功",
-	})
-}
-
-// 删除用户
-func DeleteUser(c *gin.Context) {
-	var deleteUserReq DeleteUserRequest
-	if err := c.ShouldBindJSON(&deleteUserReq); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": e.ERROR_BIND_JSON,
-			"msg":  e.GetMsg(e.ERROR_BIND_JSON),
-			"data": err.Error(),
-		})
-	}
-	var user models.User
-	user.Uuid = deleteUserReq.Uuid
-
-	models.DeleteUser(&user)
-	c.JSON(http.StatusOK, gin.H{
-		"code": 20000,
-		"msg":  "删除用户成功",
-	})
-}
-
-// 用户登录
-func UserLogin(c *gin.Context) {
-	// 定义接收结构体
-	var loginReq LoginRequest
-	// 绑定JSON数据
-	if err := c.ShouldBindJSON(&loginReq); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": e.INVALID_PARAMS,
-			"msg":  e.GetMsg(e.INVALID_PARAMS),
-		})
+// @Summary 创建用户
+// @Description 创建一个用户，并附带默认配置，默认密码为dephy@2025.com
+// @Tags 用户管理
+// @Produce  json
+// @Param username body string true "用户名"
+// @Param phone body string true "用户电话号码"
+// @Success 200 {object} app.Response	"success"
+// @Success 500 {object} app.Response	"创建用户失败"
+// @Router /api/v1/user/create [post]
+func UserCreateHandler(c *gin.Context) {
+	var req user_service.CreateRequest
+	appG := app.Gin{C: c}
+	httpCode, errCode, err := app.BindJsonAndValid(c, &req)
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, err.Error())
 		return
 	}
 
-	// 查询数据库
-	var user models.User
-	user = models.GetUserByName(loginReq.Username)
-
-	// 验证密码
-	if user.Password != loginReq.Password {
-		// 添加调试日志
-		c.JSON(http.StatusUnauthorized, gin.H{
-			"code": e.ERROR_USER_AUTH,
-			"msg":  e.GetMsg(e.ERROR_USER_AUTH),
-		})
+	if err := user_service.CreateUserService(req); err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, err.Error())
 		return
-	} else {
-		token, _ := util.GenerateToken(user.Username, user.Password)
-		c.JSON(http.StatusOK, gin.H{
-			"code": 20000,
-			"data": gin.H{
-				"token": token,
-			},
-		})
 	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, e.GetMsg(e.SUCCESS))
 }
 
-// 用户信息
-func UserInfo(c *gin.Context) {
-	token := c.GetHeader("Authorization")
-	claims, err := util.ParseToken(token)
+// @Summary 更新用户
+// @Description 更新一个用户的所有信息，根据uuid搜索用户
+// @Tags 用户管理
+// @Produce  json
+// @Param uuid body string true "用户uuid"
+// @Param name body string true "修改后的用户真实姓名"
+// @Param avatar body string true "用户头像url"
+// @Param introduction body string true "用户个人简介描述信息"
+// @Param phone body string true "用户电话号码"
+// @Param address body string true "用户提币地址"
+// @Success 200 {object} app.Response	"success"
+// @Failure 404 {object} app.Response	"用户未找到"
+// @Failure 500 {object} app.Response	"更新用户信息失败"
+// @Router /api/v1/user/update [post]
+func UserUpdateHandler(c *gin.Context) {
+	var req user_service.UpdateRequest
+	appG := app.Gin{C: c}
+	httpCode, errCode, err := app.BindJsonAndValid(c, &req)
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, err.Error())
+		return
+	}
+
+	if err := user_service.UpdateUserService(req); err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, err.Error())
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, e.GetMsg(e.SUCCESS))
+}
+
+// @Summary 删除用户
+// @Description 根据用户uuid参数删除当前用户
+// @Tags 用户管理
+// @Produce  json
+// @Param uuid query string true "用户uuid"
+// @Success 200 {object} app.Response	"success"
+// @Failure 500 {object} app.Response	"删除用户失败"
+// @Router /api/v1/user/delete [get]
+func UserDeleteHandler(c *gin.Context) {
+	var req user_service.DeleteRequest
+	appG := app.Gin{C: c}
+	httpCode, errCode, err := app.BindJsonAndValid(c, &req)
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, err.Error())
+		return
+	}
+
+	if err := user_service.DeleteUserService(req); err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, err.Error())
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, e.GetMsg(e.SUCCESS))
+}
+
+// @Summary 登录接口
+// @Description 用户登录接口
+// @Tags 用户管理
+// @Produce  json
+// @Param username query string true "用户名"
+// @Param phone query string true "用户电话号码"
+// @Param password query string true "用户密码"
+// @Success 200 {object} app.Response	"success"
+// @Failure 500 {object} app.Response	"登录失败"
+// @Router /api/v1/user/login [post]
+func UserLoginHandler(c *gin.Context) {
+	var req user_service.LoginRequest
+	appG := app.Gin{C: c}
+	httpCode, errCode, err := app.BindJsonAndValid(c, &req)
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, err.Error())
+		return
+	}
+
+	token, err := user_service.LoginService(req)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"code": e.ERROR_AUTH_TOKEN,
-			"msg":  e.GetMsg(e.ERROR_AUTH_TOKEN),
-		})
+		appG.Response(http.StatusInternalServerError, e.ERROR, err.Error())
+		return
 	}
-	info := models.GetUserByName(claims.Username)
-	log.Log.Debugf("用户名: %s", claims.Username)
-	log.Log.Debugf("密码: %s", claims.Password)
-	var roles []string
-	roles = append(roles, models.GetRoleById(info.RoleId).KeyName)
-	// TODO: 添加基于token的业务逻辑处理
 
-	// 返回JSON响应
-	c.JSON(http.StatusOK, gin.H{
-		"code": 20000,
-		"data": gin.H{
-			"name":         info.Name,
-			"uuid":         info.Uuid,
-			"phone":        info.Phone,
-			"address":      info.Address,
-			"introduction": info.Introduction,
-			"roles":        roles,
-		},
-	})
+	appG.Response(http.StatusOK, e.SUCCESS, gin.H{"token": token})
 }
 
-func UserList(c *gin.Context) {
-	page := c.Query("page")
-	limit := c.Query("limit")
+// @Summary 获取用户列表
+// @Description 获取当前数据库中所有用户信息数据
+// @Tags 用户管理
+// @Produce  json
+// @Param page query string true "分页查询第几页"
+// @Param limit query string true "每页限制查询的数据数量"
+// @Success 200 {object} app.Response	"success"
+// @Failure 500 {object} app.Response	"获取用户列表数据失败"
+// @Router /api/v1/user/list [get]
+func UserListHandler(c *gin.Context) {
+	var req user_service.UserListRequest
+	appG := app.Gin{C: c}
+	httpCode, errCode, err := app.BindQueryAndValid(c, &req)
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, err.Error())
+		return
+	}
 
-	valid := validation.Validation{}
-	valid.Required(page, "page").Message("page 参数不能为空")
-	valid.Required(limit, "limit").Message("limit 参数不能为空")
+	data, err := user_service.ListService(req)
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, err.Error())
+		return
+	}
 
-	pageInt, _ := strconv.Atoi(page)
-	limitInt, _ := strconv.Atoi(limit)
-	users := models.GetUserList(pageInt, limitInt)
-
-	c.JSON(http.StatusOK, gin.H{
-		"code": 20000,
-		"data": gin.H{
-			"total": models.GetUserCount(), // 使用数据库实际总数
-			"items": users,
-		},
-	})
-
+	appG.Response(http.StatusOK, e.SUCCESS, data)
 }
 
-func LoginOut(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"code": 20000,
-		"msg":  "登录成功",
-	})
+// @Summary 获取用户信息
+// @Description 返回用户的详细信息
+// @Tags 用户管理
+// @Produce  json
+// @Success 200 {object} app.Response	"success"
+// @Failure 500 {object} app.Response	"获取用户信息失败"
+// @Router /api/v1/user/info [get]
+func UserInfoHandler(c *gin.Context) {
+	appG := app.Gin{C: c}
+	uuid, isExist := appG.C.Get("uuid")
+	if !isExist {
+		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_VALUE, e.GetMsg(e.ERROR_AUTH_VALUE))
+		return
+	}
+
+	uuidStr, ok := uuid.(string)
+	if !ok {
+		appG.Response(http.StatusInternalServerError, e.ERROR, e.GetMsg(e.ERROR))
+		return
+	}
+
+	response, err := user_service.InfoService(uuidStr)
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, err.Error())
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, response)
+}
+
+// @Summary 用户登出
+// @Description 当前用户登出操作
+// @Tags 用户管理
+// @Produce  json
+// @Param token query string true "用户token"
+// @Success 200 {object} app.Response	"success"
+// @Failure 500 {object} app.Response	"用户登出失败"
+// @Router /api/v1/user/logout [post]
+func UserLogoutHandler(c *gin.Context) {
+	usernameC, _ := c.Get("username")
+	log.Log.Debugf("上下文username: %v", usernameC)
+	appG := app.Gin{C: c}
+	uername, _ := appG.C.Get("username")
+	log.Log.Debugf("UserLogoutHandler called for user: %v", uername)
+	if err := user_service.LogoutService(c); err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR, err.Error())
+		return
+	}
+
+	appG.Response(http.StatusOK, e.SUCCESS, e.GetMsg(e.SUCCESS))
 }

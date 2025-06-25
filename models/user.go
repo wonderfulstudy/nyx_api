@@ -1,7 +1,6 @@
 package models
 
 import (
-	"nyx_api/middleware/aes"
 	"nyx_api/pkg/setting"
 	"time"
 )
@@ -11,10 +10,9 @@ type User struct {
 	Uuid         string    `json:"uuid"`
 	Username     string    `json:"username"`
 	Password     string    `json:"password"`
-	Avatar       string    `json:"avatar"`
 	Name         string    `json:"name"`
+	Avatar       string    `json:"avatar"`
 	Introduction string    `json:"introduction"`
-	Token        string    `json:"token"`
 	RoleId       int       `json:"roleId"`
 	Phone        string    `json:"phone"`
 	Address      string    `json:"address"`
@@ -23,53 +21,60 @@ type User struct {
 	UpdatedAt    time.Time `gorm:"timestamp"`
 }
 
-func GetUserByUuid(uuid string) (user User) {
-	db.Where("uuid = ?", uuid).First(&user)
-	user.Password, _ = aes.AesDecryptCBCBase64(user.Password)
-	return
-}
-
-func GetUserByName(userName string) (user User) {
-	db.Where("username = ?", userName).First(&user)
-	user.Password, _ = aes.AesDecryptCBCBase64(user.Password)
-	return
-}
-
-func GetUsersByToken(token string) (users []User) {
-	db.Where("token = ?", token).Find(&users)
-	for i := 0; i < len(users); i++ {
-		users[i].Password, _ = aes.AesDecryptCBCBase64(users[i].Password)
+func GetByUuid(uuid string) (User, error) {
+	var user User
+	result := db.Model(&User{}).Where("uuid = ?", uuid).First(&user)
+	if result.Error != nil {
+		return User{}, result.Error
 	}
-	return
+
+	return user, nil
 }
 
-func GetUserByToken(token string) (user User) {
-	db.Where("token = ?", token).First(&user)
-	user.Password, _ = aes.AesDecryptCBCBase64(user.Password)
-	return
+func GetByUsername(userName string) (User, error) {
+	var user User
+	result := db.Model(&User{}).Where("username = ?", userName).First(&user)
+	if result.Error != nil {
+		return User{}, result.Error
+	}
+
+	return user, nil
 }
 
-func GetUserList(page, limit int) (user []User) {
-	db.Where("status = ?", 1).Offset((page - 1) * setting.PageSize).Limit(limit).Find(&user)
-	return
+func ListUsers(page, limit int) ([]User, error) {
+	var users []User
+	result := db.Model(&User{}).
+		Offset((page - 1) * setting.PageSize).
+		Limit(limit).
+		Find(&users)
+	if result.Error != nil {
+		return []User{}, result.Error
+	}
+	return users, nil
 }
 
-func GetUserCount() (count int) {
-	db.Where("status = ?", 1).Model(&User{}).Count(&count)
-	return
+func Count() (int, error) {
+	var count int
+	result := db.Model(&User{}).Count(&count)
+	if result.Error != nil {
+		return 0, result.Error
+	}
+	return count, nil
 }
 
-func AddUser(user *User) {
-	db.Create(&user)
-	return
+func AddUser(user *User) error {
+	if err := db.Create(user).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
-func DeleteUser(user *User) {
-	db.Table("nyx_user").Where("uuid = ?", user.Uuid).Update("status", 0)
-	return
+func DeleteUser(uuid string) error {
+	result := db.Model(&User{}).Where("uuid = ?", uuid).Update("status", 0)
+	return result.Error
 }
 
-func UpdateUser(user *User) {
-	db.Table("nyx_user").Where("uuid = ?", user.Uuid).Update(user)
-	return
+func UpdateUser(user *User) error {
+	result := db.Model(&User{}).Where("uuid = ?", user.Uuid).Update(user)
+	return result.Error
 }

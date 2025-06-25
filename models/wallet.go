@@ -3,31 +3,45 @@ package models
 import "time"
 
 type Wallet struct {
-	Id      int     `gorm:"primary_key" json:"id"`
-	Uuid    string  `json:"uuid"`
-	Balance float64 `json:"balance"`
-	Pow     float64 `json:"pow"`
-	Pos     float64 `json:"pos"`
+	Id      int `gorm:"primary_key"`
+	Uuid    string
+	Balance float64
+	Pow     float64
+	Pos     float64
 }
 
 type WalletAction struct {
-	Id        int       `gorm:"primary_key" json:"id"`
-	Uuid      string    `json:"uuid"`
-	ActionId  int       `json:"actionId"`
-	SAddress  string    `json:"s_address"`
-	DAddress  string    `json:"d_address"`
-	Amount    float32   `json:"amount"`
-	Status    int       `json:"status"`
-	CreatedAt time.Time `gorm:"timestamp" json:"createdAt"`
-	UpdatedAt time.Time `gorm:"timestamp" json:"updateAt"`
+	Id        int `gorm:"primary_key"`
+	Uuid      string
+	ActionId  int `gorm:"foreignkey:ActionId;references:ID;onDelete:SET NULL"`
+	SAddress  string
+	DAddress  string
+	Amount    float64
+	Status    int
+	CreatedAt time.Time `gorm:"timestamp"`
+	UpdatedAt time.Time `gorm:"timestamp"`
 }
 
-func GetWalletByUuid(uuid string) (wallet Wallet) {
-	db.Where("uuid = ?", uuid).First(&wallet)
-	return
+func GetWalletByUuid(uuid string) (*Wallet, error) {
+	var wallet Wallet
+	result := db.Model(&Wallet{}).Where("uuid = ?", uuid).First(&wallet)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &wallet, nil
 }
 
-func GetActionByUuid(uuid string) (walletAction []WalletAction) {
-	db.Table("nyx_wallet_action").Where("uuid = ?", uuid).Find(&walletAction)
-	return
+func GetActionsByUuid(uuid string) ([]WalletAction, error) {
+	var walletActions []WalletAction
+	result := db.Model(&WalletAction{}).Where("uuid = ?", uuid).Find(&walletActions)
+	if result.Error != nil {
+		return []WalletAction{}, result.Error
+	}
+	return walletActions, nil
+}
+
+func GetActionCount(uuid string) int {
+	var count int
+	db.Model(&WalletAction{}).Where("uuid = ?", uuid).Count(&count)
+	return count
 }

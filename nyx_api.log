@@ -1,29 +1,223 @@
-time="2025-06-16T23:00:04+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/info status=200
-time="2025-06-16T23:00:04+08:00" level=info msg="请求url/api/v1/user/info"
-time="2025-06-16T23:00:04+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=8.2448ms method=GET path=/api/v1/user/info status=200
-time="2025-06-16T23:00:22+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/login status=200
-time="2025-06-16T23:00:22+08:00" level=info msg="请求url/api/v1/user/login"
-time="2025-06-16T23:00:22+08:00" level=info msg="解密数据：{\"username\":\"admin\",\"password\":\"CPPE-cd@2019\"}"
-time="2025-06-16T23:00:22+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=5.9389ms method=POST path=/api/v1/user/login status=200
-time="2025-06-16T23:00:22+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/info status=200
-time="2025-06-16T23:00:22+08:00" level=info msg="请求url/api/v1/user/info"
-time="2025-06-16T23:00:22+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=11.9317ms method=GET path=/api/v1/user/info status=200
-time="2025-06-16T23:20:46+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/logout status=200
-time="2025-06-16T23:20:46+08:00" level=info msg="请求url/api/v1/user/logout"
-time="2025-06-16T23:20:46+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=POST path=/api/v1/user/logout status=200
-time="2025-06-16T23:20:54+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/login status=200
-time="2025-06-16T23:20:54+08:00" level=info msg="请求url/api/v1/user/login"
-time="2025-06-16T23:20:54+08:00" level=info msg="解密数据：{\"username\":\"admin\",\"password\":\"CPPE-cd@2019\"}"
-time="2025-06-16T23:20:54+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=6.5528ms method=POST path=/api/v1/user/login status=200
-time="2025-06-16T23:20:54+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/info status=200
-time="2025-06-16T23:20:54+08:00" level=info msg="请求url/api/v1/user/info"
-time="2025-06-16T23:20:54+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=11.0621ms method=GET path=/api/v1/user/info status=500
-time="2025-06-16T23:31:49+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/login status=200
-time="2025-06-16T23:31:49+08:00" level=info msg="请求url/api/v1/user/login"
-time="2025-06-16T23:31:49+08:00" level=info msg="解密数据：{\"username\":\"admin\",\"password\":\"CPPE-cd@2019\"}"
-time="2025-06-16T23:31:49+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=14.3303ms method=POST path=/api/v1/user/login status=200
-time="2025-06-16T23:31:49+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=0s method=OPTIONS path=/api/v1/user/info status=200
-time="2025-06-16T23:31:49+08:00" level=info msg="请求url/api/v1/user/info"
-time="2025-06-16T23:31:49+08:00" level=debug msg="用户名: admin"
-time="2025-06-16T23:31:49+08:00" level=debug msg="密码: CPPE-cd@2019"
-time="2025-06-16T23:31:49+08:00" level=info msg="HTTP Request" client=192.168.2.7 latency=9.4942ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T10:52:51+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T10:52:51+08:00" level=info msg="Uuid.Required.Uuid Can not be empty"
+time="2025-06-23T10:52:51+08:00" level=info msg="HTTP Request" client="::1" latency=2.0396ms method=GET path=/api/v1/wallet/info status=500
+time="2025-06-23T10:55:33+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T10:55:33+08:00" level=info msg="Uuid.Required.Uuid Can not be empty"
+time="2025-06-23T10:55:33+08:00" level=info msg="HTTP Request" client="::1" latency=1.5925ms method=GET path=/api/v1/wallet/info status=500
+time="2025-06-23T10:56:24+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T10:56:24+08:00" level=info msg="Uuid.Required.Uuid Can not be empty"
+time="2025-06-23T10:56:24+08:00" level=info msg="HTTP Request" client="::1" latency=13.4058ms method=GET path=/api/v1/wallet/info status=500
+time="2025-06-23T10:57:29+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T10:57:29+08:00" level=info msg="Uuid.Required.Uuid Can not be empty"
+time="2025-06-23T10:57:29+08:00" level=info msg="HTTP Request" client="::1" latency=1.2587ms method=GET path=/api/v1/wallet/info status=500
+time="2025-06-23T10:57:52+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T10:57:52+08:00" level=info msg="Uuid.Required.Uuid Can not be empty"
+time="2025-06-23T10:57:52+08:00" level=info msg="HTTP Request" client="::1" latency=10.9642ms method=GET path=/api/v1/wallet/info status=500
+time="2025-06-23T10:58:22+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T10:58:22+08:00" level=debug msg="wallet 请求参数 : {Uuid:57478c08-d086-44ef-84aa-9ee448ccf0d0}"
+time="2025-06-23T10:58:22+08:00" level=debug msg="WalletInfoService called with request: {Uuid:57478c08-d086-44ef-84aa-9ee448ccf0d0}"
+time="2025-06-23T10:58:22+08:00" level=info msg="HTTP Request" client="::1" latency=14.2555ms method=GET path=/api/v1/wallet/info status=200
+time="2025-06-23T10:58:32+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T10:58:32+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T10:58:32+08:00" level=info msg="HTTP Request" client="::1" latency=8.7248ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T10:58:33+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/wallet/info status=200
+time="2025-06-23T10:58:33+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/wallet/action status=200
+time="2025-06-23T10:58:33+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T10:58:33+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T10:58:33+08:00" level=debug msg="wallet 请求参数 : {Uuid:6728a776-5b93-4de5-abca-73578a99eed3}"
+time="2025-06-23T10:58:33+08:00" level=debug msg="WalletInfoService called with request: {Uuid:6728a776-5b93-4de5-abca-73578a99eed3}"
+time="2025-06-23T10:58:33+08:00" level=info msg="HTTP Request" client="::1" latency=7.4604ms method=GET path=/api/v1/wallet/info status=200
+time="2025-06-23T10:58:33+08:00" level=info msg="HTTP Request" client="::1" latency=5.2626ms method=GET path=/api/v1/wallet/action status=404
+time="2025-06-23T11:18:37+08:00" level=debug msg="Authorization header: "
+time="2025-06-23T11:18:37+08:00" level=info msg="HTTP Request" client="::1" latency=8.6767ms method=GET path=/api/v1/wallet/action status=401
+time="2025-06-23T11:19:03+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T11:19:03+08:00" level=info msg="HTTP Request" client="::1" latency=1.6535ms method=GET path=/api/v1/wallet/action status=404
+time="2025-06-23T11:20:12+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T11:20:12+08:00" level=info msg="HTTP Request" client="::1" latency=17.9448ms method=GET path=/api/v1/wallet/action status=200
+time="2025-06-23T11:20:22+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T11:20:22+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T11:20:22+08:00" level=info msg="HTTP Request" client="::1" latency=11.8889ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T11:20:22+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/wallet/info status=200
+time="2025-06-23T11:20:22+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/wallet/action status=200
+time="2025-06-23T11:20:22+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T11:20:22+08:00" level=debug msg="Authorization header: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1dWlkIjoiNjcyOGE3NzYtNWI5My00ZGU1LWFiY2EtNzM1NzhhOTllZWQzIiwidXNlcm5hbWUiOiJhZG1pbiIsInBob25lIjoiMTgxMjMzOTc4MDUiLCJleHAiOjE3NTA2NTI3MzMsImlzcyI6Imdpbi1ibG9nIn0.gnz02XRC99E-1OfUBl7WA_AjanvE0A5W_01Olglsdjo"
+time="2025-06-23T11:20:22+08:00" level=debug msg="wallet 请求参数 : {Uuid:6728a776-5b93-4de5-abca-73578a99eed3}"
+time="2025-06-23T11:20:22+08:00" level=debug msg="WalletInfoService called with request: {Uuid:6728a776-5b93-4de5-abca-73578a99eed3}"
+time="2025-06-23T11:20:22+08:00" level=info msg="HTTP Request" client="::1" latency=7.8413ms method=GET path=/api/v1/wallet/info status=200
+time="2025-06-23T11:20:22+08:00" level=info msg="HTTP Request" client="::1" latency=22.4663ms method=GET path=/api/v1/wallet/action status=200
+time="2025-06-23T11:21:59+08:00" level=info msg="HTTP Request" client="::1" latency=16.4396ms method=GET path=/api/v1/wallet/action status=200
+time="2025-06-23T11:22:37+08:00" level=info msg="HTTP Request" client="::1" latency=16.2777ms method=GET path=/api/v1/wallet/action status=200
+time="2025-06-23T12:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/login status=200
+time="2025-06-23T12:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=12.5478ms method=POST path=/api/v1/user/login status=200
+time="2025-06-23T12:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T12:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=10.6554ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T12:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/wallet/info status=200
+time="2025-06-23T12:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/wallet/action status=200
+time="2025-06-23T12:49:05+08:00" level=debug msg="wallet 请求参数 : {Uuid:6728a776-5b93-4de5-abca-73578a99eed3}"
+time="2025-06-23T12:49:05+08:00" level=debug msg="WalletInfoService called with request: {Uuid:6728a776-5b93-4de5-abca-73578a99eed3}"
+time="2025-06-23T12:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=11.2225ms method=GET path=/api/v1/wallet/info status=200
+time="2025-06-23T12:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=28.7565ms method=GET path=/api/v1/wallet/action status=200
+time="2025-06-23T12:49:31+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T12:49:31+08:00" level=info msg="HTTP Request" client="::1" latency=24.8669ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T12:51:24+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T12:51:24+08:00" level=info msg="HTTP Request" client="::1" latency=16.4865ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T12:51:24+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T12:51:24+08:00" level=info msg="HTTP Request" client="::1" latency=28.7524ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T13:00:19+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T13:00:19+08:00" level=info msg="HTTP Request" client="::1" latency=45.0524ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T13:00:19+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T13:00:19+08:00" level=info msg="HTTP Request" client="::1" latency=52.4035ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T13:01:52+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T13:01:52+08:00" level=info msg="HTTP Request" client="::1" latency=7.5829ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T13:01:52+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T13:01:52+08:00" level=info msg="HTTP Request" client="::1" latency=40.7933ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T13:02:12+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T13:02:12+08:00" level=info msg="HTTP Request" client="::1" latency=64.4903ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T13:03:02+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T13:03:02+08:00" level=info msg="HTTP Request" client="::1" latency=10.4775ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T13:03:03+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T13:03:03+08:00" level=info msg="HTTP Request" client="::1" latency=44.1945ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T13:04:30+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T13:04:30+08:00" level=info msg="HTTP Request" client="::1" latency=6.7382ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T13:04:30+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T13:04:30+08:00" level=info msg="HTTP Request" client="::1" latency=38.3446ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T13:04:59+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T13:04:59+08:00" level=info msg="HTTP Request" client="::1" latency=12.3571ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T13:05:00+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T13:05:00+08:00" level=info msg="HTTP Request" client="::1" latency=40.748ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T14:17:09+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T14:17:09+08:00" level=info msg="HTTP Request" client="::1" latency=31.7515ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T14:17:09+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T14:17:09+08:00" level=info msg="HTTP Request" client="::1" latency=48.8677ms method=GET path=/api/v1/user/list status=500
+time="2025-06-23T14:24:24+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T14:24:24+08:00" level=info msg="HTTP Request" client="::1" latency=10.3541ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T14:24:25+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T14:24:25+08:00" level=info msg="HTTP Request" client="::1" latency=42.2922ms method=GET path=/api/v1/user/list status=500
+time="2025-06-23T14:26:15+08:00" level=info msg="HTTP Request" client="::1" latency="550.1µs" method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T14:26:15+08:00" level=info msg="HTTP Request" client="::1" latency=16.9884ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T14:26:15+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T14:26:15+08:00" level=info msg="HTTP Request" client="::1" latency=64.2988ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T14:32:51+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T14:32:51+08:00" level=info msg="HTTP Request" client="::1" latency=20.4869ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T14:32:51+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T14:32:51+08:00" level=info msg="HTTP Request" client="::1" latency=67.1728ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T15:08:11+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T15:08:11+08:00" level=info msg="HTTP Request" client="::1" latency=20.4555ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T15:08:12+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T15:08:12+08:00" level=info msg="HTTP Request" client="::1" latency=59.6181ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T15:18:37+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T15:18:37+08:00" level=info msg="HTTP Request" client="::1" latency=75.1032ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T15:18:52+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T15:18:52+08:00" level=info msg="HTTP Request" client="::1" latency=12.6082ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T15:18:52+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T15:18:53+08:00" level=info msg="HTTP Request" client="::1" latency=60.1943ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T15:20:56+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T15:20:56+08:00" level=info msg="HTTP Request" client="::1" latency=7.3693ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T15:20:57+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T15:20:57+08:00" level=info msg="HTTP Request" client="::1" latency=67.0633ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T15:22:17+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T15:22:17+08:00" level=info msg="HTTP Request" client="::1" latency=59.9148ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T15:22:20+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T15:22:20+08:00" level=info msg="HTTP Request" client="::1" latency=7.2197ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T15:22:20+08:00" level=info msg="HTTP Request" client="::1" latency=62.1014ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T15:27:01+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T15:27:02+08:00" level=info msg="HTTP Request" client="::1" latency=14.6389ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T15:27:02+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T15:27:02+08:00" level=info msg="HTTP Request" client="::1" latency=75.6073ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T15:27:48+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T15:27:48+08:00" level=info msg="HTTP Request" client="::1" latency=51.7487ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T15:27:52+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T15:27:52+08:00" level=info msg="HTTP Request" client="::1" latency=6.9551ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T15:27:52+08:00" level=info msg="HTTP Request" client="::1" latency=79.3312ms method=GET path=/api/v1/user/list status=200
+time="2025-06-23T16:56:25+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/wallet/info status=200
+time="2025-06-23T16:56:25+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/wallet/action status=200
+time="2025-06-23T16:56:25+08:00" level=error msg="Token parse error: token is expired by 1h7m20s"
+time="2025-06-23T16:56:25+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=GET path=/api/v1/wallet/info status=401
+time="2025-06-23T16:56:25+08:00" level=error msg="Token parse error: token is expired by 1h7m20s"
+time="2025-06-23T16:56:25+08:00" level=info msg="HTTP Request" client="::1" latency="510.6µs" method=GET path=/api/v1/wallet/action status=401
+time="2025-06-23T16:56:27+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-23T16:56:27+08:00" level=error msg="Token parse error: token is expired by 1h7m22s"
+time="2025-06-23T16:56:27+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=GET path=/api/v1/user/list status=401
+time="2025-06-23T16:56:29+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/worker/list status=200
+time="2025-06-23T16:56:29+08:00" level=error msg="Token parse error: token is expired by 1h7m24s"
+time="2025-06-23T16:56:29+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=GET path=/api/v1/worker/list status=401
+time="2025-06-23T16:56:58+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-23T16:56:58+08:00" level=error msg="Token parse error: token is expired by 1h7m53s"
+time="2025-06-23T16:56:58+08:00" level=info msg="HTTP Request" client="::1" latency="508.1µs" method=GET path=/api/v1/user/info status=401
+time="2025-06-23T16:57:00+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/login status=200
+time="2025-06-23T16:57:00+08:00" level=info msg="HTTP Request" client="::1" latency=20.3421ms method=POST path=/api/v1/user/login status=200
+time="2025-06-23T16:57:00+08:00" level=info msg="HTTP Request" client="::1" latency=17.5589ms method=GET path=/api/v1/user/info status=200
+time="2025-06-23T16:57:00+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/worker/list status=200
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34603 a96628fbda81f573517209ad70eb30cceeb4ce2636d72ca6ccfc485cb0b161a9 9Wya97hw6RSRcoArM39UHE95psRkusipr943ALsyv6RX 2 6479223 2134 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34604 c93135e5325d5e0bf4e2d407e4080b356e7db148dc7d13af66786a67a7dd7322 9Wya97hw6RSRcoArM39UHE95psRkusipr943ALsyv6RX 2 6467734 2134 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34605 f84583f02563536804c8acb7caa8cf39c60350897bc9626d5fadf4411963f705 9Wya97hw6RSRcoArM39UHE95psRkusipr943ALsyv6RX 2 6490481 2134 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34606 675c07eff97673342de345da87ff262164be4b3fb58507cac8b244e517aff4e1 9Wya97hw6RSRcoArM39UHE95psRkusipr943ALsyv6RX 2 6483504 2135 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34607 7fe0be7b26cdf851d1af064a2e13c1c4d8054207d07344a0c7f1ac5ba35266e1 9Wya97hw6RSRcoArM39UHE95psRkusipr943ALsyv6RX 2 6478986 2135 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34608 3f18e58804ec8c3bd302c897e39043312c77a8156d05e8b11b306269a2f99f9a 9Wya97hw6RSRcoArM39UHE95psRkusipr943ALsyv6RX 2 6473934 2136 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34609 9a8f01dc6ad7ec616344fac4ce40036de544a411dd156cccd447530c8c7d5875 BNsAver99cT1AdosJ15NeJ6uF181QBg6ByVJFTC8NCHM 3 5415859 0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34610 9c3b8596e6447f67bf4732b821084fefcc65bdbc75b685cc5fa9dea475cecc43 GbXb36deACMUvDqiouiquAC5Qy9osEAW26wMNZEWcec2 2 6487723 0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34611 a34cf14b978983b1198b2c5a94dd64ed199ee1a42e9f1f2f7cd628ef5625b6e2 GbXb36deACMUvDqiouiquAC5Qy9osEAW26wMNZEWcec2 2 6477110 0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=debug msg="worker{34612 24b692ce545451e9e3bb186da1d3096c7fbb4f5b8156037d260ec058da2735cd GbXb36deACMUvDqiouiquAC5Qy9osEAW26wMNZEWcec2 2 6457991 0 0001-01-01 00:00:00 +0000 UTC 0001-01-01 00:00:00 +0000 UTC}"
+time="2025-06-23T16:57:00+08:00" level=info msg="HTTP Request" client="::1" latency=25.247ms method=GET path=/api/v1/worker/list status=200
+time="2025-06-24T09:29:15+08:00" level=info msg="HTTP Request" client="::1" latency="549.7µs" method=OPTIONS path=/api/v1/user/login status=200
+time="2025-06-24T09:29:15+08:00" level=info msg="HTTP Request" client="::1" latency=32.3301ms method=POST path=/api/v1/user/login status=200
+time="2025-06-24T09:29:15+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-24T09:29:16+08:00" level=info msg="HTTP Request" client="::1" latency=12.1474ms method=GET path=/api/v1/user/info status=200
+time="2025-06-24T09:29:20+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-24T09:29:20+08:00" level=info msg="HTTP Request" client="::1" latency=61.6924ms method=GET path=/api/v1/user/list status=200
+time="2025-06-24T09:32:24+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-24T09:32:24+08:00" level=info msg="HTTP Request" client="::1" latency=61.026ms method=GET path=/api/v1/user/list status=200
+time="2025-06-24T09:33:58+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-24T09:33:58+08:00" level=info msg="HTTP Request" client="::1" latency=70.2983ms method=GET path=/api/v1/user/list status=200
+time="2025-06-24T09:34:38+08:00" level=info msg="HTTP Request" client="::1" latency=1.6438ms method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-24T09:34:38+08:00" level=info msg="HTTP Request" client="::1" latency=10.8029ms method=GET path=/api/v1/user/info status=200
+time="2025-06-24T09:34:38+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-24T09:34:38+08:00" level=info msg="HTTP Request" client="::1" latency=62.6623ms method=GET path=/api/v1/user/list status=200
+time="2025-06-24T09:35:15+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-24T09:35:15+08:00" level=info msg="HTTP Request" client="::1" latency=11.5008ms method=GET path=/api/v1/user/info status=200
+time="2025-06-24T09:35:15+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-24T09:35:16+08:00" level=info msg="HTTP Request" client="::1" latency=66.5932ms method=GET path=/api/v1/user/list status=200
+time="2025-06-24T09:35:33+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-24T09:35:33+08:00" level=info msg="HTTP Request" client="::1" latency=59.9436ms method=GET path=/api/v1/user/list status=200
+time="2025-06-24T09:38:04+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-24T09:38:04+08:00" level=info msg="HTTP Request" client="::1" latency=57.163ms method=GET path=/api/v1/user/list status=200
+time="2025-06-24T09:39:56+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-24T09:39:56+08:00" level=info msg="HTTP Request" client="::1" latency=60.995ms method=GET path=/api/v1/user/list status=200
+time="2025-06-24T10:17:11+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-24T10:17:11+08:00" level=info msg="HTTP Request" client="::1" latency=15.1917ms method=GET path=/api/v1/user/info status=200
+time="2025-06-24T10:17:11+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-24T10:17:11+08:00" level=info msg="HTTP Request" client="::1" latency=70.9338ms method=GET path=/api/v1/user/list status=200
+time="2025-06-25T08:48:53+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/worker/list status=200
+time="2025-06-25T08:48:53+08:00" level=error msg="Token parse error: token is expired by 20h19m38s"
+time="2025-06-25T08:48:53+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=GET path=/api/v1/worker/list status=401
+time="2025-06-25T08:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/logout status=200
+time="2025-06-25T08:49:05+08:00" level=error msg="Token parse error: token is expired by 20h19m50s"
+time="2025-06-25T08:49:05+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=POST path=/api/v1/user/logout status=401
+time="2025-06-25T08:49:19+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/login status=200
+time="2025-06-25T08:49:19+08:00" level=info msg="HTTP Request" client="::1" latency=32.6436ms method=POST path=/api/v1/user/login status=200
+time="2025-06-25T08:49:19+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-25T08:49:20+08:00" level=info msg="HTTP Request" client="::1" latency=16.3678ms method=GET path=/api/v1/user/info status=200
+time="2025-06-25T08:49:33+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-25T08:49:34+08:00" level=info msg="HTTP Request" client="::1" latency=62.166ms method=GET path=/api/v1/user/list status=200
+time="2025-06-25T08:50:25+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-25T08:50:25+08:00" level=info msg="HTTP Request" client="::1" latency=59.9129ms method=GET path=/api/v1/user/list status=200
+time="2025-06-25T08:54:15+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-25T08:54:15+08:00" level=info msg="HTTP Request" client="::1" latency=56.036ms method=GET path=/api/v1/user/list status=200
+time="2025-06-25T10:18:21+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-25T10:18:21+08:00" level=info msg="HTTP Request" client="::1" latency=125.8385ms method=GET path=/api/v1/user/list status=200
+time="2025-06-25T10:19:14+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-25T10:19:14+08:00" level=info msg="HTTP Request" client="::1" latency=14.1551ms method=GET path=/api/v1/user/info status=200
+time="2025-06-25T10:19:14+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-25T10:19:14+08:00" level=info msg="HTTP Request" client="::1" latency=65.6597ms method=GET path=/api/v1/user/list status=200
+time="2025-06-25T10:22:43+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-25T10:22:43+08:00" level=info msg="HTTP Request" client="::1" latency=62.1949ms method=GET path=/api/v1/user/list status=200
+time="2025-06-25T10:23:24+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-25T10:23:24+08:00" level=info msg="HTTP Request" client="::1" latency=58.5116ms method=GET path=/api/v1/user/list status=200
+time="2025-06-25T10:23:31+08:00" level=info msg="HTTP Request" client="::1" latency="934.8µs" method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-25T10:23:31+08:00" level=info msg="HTTP Request" client="::1" latency=12.2313ms method=GET path=/api/v1/user/info status=200
+time="2025-06-25T10:23:31+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-25T10:23:31+08:00" level=info msg="HTTP Request" client="::1" latency=70.4846ms method=GET path=/api/v1/user/list status=200
+time="2025-06-25T10:23:53+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/info status=200
+time="2025-06-25T10:23:53+08:00" level=info msg="HTTP Request" client="::1" latency=9.3ms method=GET path=/api/v1/user/info status=200
+time="2025-06-25T10:23:54+08:00" level=info msg="HTTP Request" client="::1" latency=0s method=OPTIONS path=/api/v1/user/list status=200
+time="2025-06-25T10:23:54+08:00" level=info msg="HTTP Request" client="::1" latency=62.7073ms method=GET path=/api/v1/user/list status=200
